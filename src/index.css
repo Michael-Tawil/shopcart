@@ -106,3 +106,27 @@ img{
   width: 200px;
   height: 200px;
 }
+.modalcont{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.cmodal{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #DFDFDF;
+  padding: 10px;
+  font-family: "Italiana", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.2rem;
+  box-shadow: -2px 7px 15px 3px rgba(0,0,0,0.45);
+}

@@ -1,6 +1,5 @@
 import Home from './home'
-import Shop from './shop'
-import Cart from './Cart'
+import Shop from './Shop'
 
 const router = [
     {
@@ -12,10 +11,6 @@ const router = [
       path: "/Shop",
       element: <Shop />
     },
-    {
-      path:"/Cart",
-      element: <Cart />
-    }
 ]
 
   export default router

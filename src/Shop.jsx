@@ -1,9 +1,12 @@
+import Cart from "./Cart";
 import Hnav from "./hnav"
 import Pcard from "./Pcard"
 import { useEffect, useState } from "react"
 function Shop(){
-    const [amount,Setamount] = useState({0:0,1:0,2:0,3:0,4:0});
-    const [prodatas,Setprodatas] = useState([]);
+    const [amount,Setamount] = useState({0:0,1:0,2:0,3:0,4:0})
+    const [prodatas,Setprodatas] = useState([])
+    const [iname, Setiname] = useState("")
+    const [isopen,Setisopen] = useState(false)
 
     function hamch(e,index){
         let count = parseInt(e.target.value)
@@ -29,8 +32,19 @@ function Shop(){
             [index]:(prevamount[index])-1
         }))
     }
-    function Acart(){
+    function Acart(index,count,altext){
+        let temparray = [...iname]
+        temparray[index] = [altext,count]
+        Setiname(temparray)
+        console.log(iname)
+    }
 
+    function modal(){
+        Setisopen(!isopen)
+        console.log(isopen)
+    }
+    function clear(){
+        Setiname("")
     }
     useEffect(()=>{
         async function Getproducts() {
@@ -40,40 +54,41 @@ function Shop(){
         let prodata = await fetchpro.json();
         let pimg = prodata.image
         let ptitle = prodata.title
-        parary.push([pimg,ptitle])
+        parary.push({"proimg":pimg,"protitle":ptitle})
 
         }
         Setprodatas(parary)
         }
         Getproducts()
     },[])
-    
-    useEffect(() => {
-        if (prodatas.length > 1) {
-            console.log("this is the state "+ prodatas); // Now it will only log when data is available
-        }
-    }, [prodatas]);
 
+    useEffect(()=>{
+        console.log(prodatas)
+    },[prodatas])
+    
     return(
-        <>
-            <Hnav/>
+    <> 
+        <Hnav modal={()=>modal()}/>
+        {isopen ? (<Cart clear ={()=>clear()} modal={()=>modal()} iname={iname}/>) :(
+            <>
             <div className="hdiv">
+    
                 {prodatas.map((item,index)=>{
                     return(
                     <Pcard
                     key = {index}
-                    srcimg = {item[0]}
-                    altext = {item[1]}
+                    srcimg = {item.proimg}
+                    altext = {item.protitle}
                     plusbtn = {()=>pbtn(index)}
                     minusbtn = {()=>mbtn(index)}
-                    addcart ={Acart}
+                    addcart ={()=>Acart(index,amount[index],item.protitle)}
                     hamch = {(e)=>hamch(e,index)}
                     amount = {amount[index]}/>
                     )
                 })}
-                
             </div>
-        </>
-    )
-    }
+            </>
+        )}
+    </>
+    )}
     export default Shop
